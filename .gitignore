@@ -1,0 +1,11 @@
+# Dipendenze
+node_modules/
+packages/*/node_modules/
+
+# Env e direnv
+.envrc
+.direnv/
+
+# File di lock
+pnpm-lock.yaml
+
