@@ -1,0 +1,16 @@
+{
+    "name": "@mvgc/service-generation",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Microservizio per la gestione dei modelli e la generazione di testo",
+    "main": "src/index.js",
+    "scripts": {
+        "dev": "node --watch src/index.js"
+    },
+    "dependencies": {
+        "@mvgc/shared": "workspace:*",
+        "express": "^5.1.0",
+        "cors": "^2.8.5",
+        "mongoose": "^8.13.2"
+    }
+}
