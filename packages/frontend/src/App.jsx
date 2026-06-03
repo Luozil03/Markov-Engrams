@@ -1,14 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// TODO: importare i componenti man mano che li sviluppo
+import Navbar from "./components/Navbar";
 
 function App() {
     return (
         <BrowserRouter>
             <div className="app-layout">
-                {/* TODO: Inserire la Navbar qui */}
-                <header style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
-                    <h2>MarkovGen - Work in Progress</h2>
-                </header>
+                <Navbar />
 
                 <main style={{ padding: "2rem" }}>
                     <Routes>
