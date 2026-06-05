@@ -1,18 +1,16 @@
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
-    // TODO: spostare stili inline in css (appena ho tempo)
     return (
-        <nav className="navbar" style={{ padding: "1rem", borderBottom: "1px solid #ccc", display: "flex", justifyContent: "space-between" }}>
+        <nav className="navbar">
             <div className="navbar-brand">
-                <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Engrammi</span>
+                <span>Engrammi</span>
             </div>
 
-            <div className="navbar-links" style={{ display: "flex", gap: "1.5rem" }}>
-                {/* forse si potrebbe mettere un margine diverso ma per ora ok */}
-                <NavLink to="/" end>Addestra</NavLink>
-                <NavLink to="/dashboard">Dashboard</NavLink>
-                <NavLink to="/about">Info</NavLink>
+            <div className="navbar-links">
+                <NavLink to="/" end className="navbar-link">Addestra</NavLink>
+                <NavLink to="/dashboard" className="navbar-link">Dashboard</NavLink>
+                <NavLink to="/about" className="navbar-link">Info</NavLink>
             </div>
         </nav>
     );

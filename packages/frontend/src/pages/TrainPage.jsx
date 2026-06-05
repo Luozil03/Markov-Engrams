@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { trainModel } from "../api.js";
 
 function TrainPage() {
-
     // stati del form
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -53,41 +52,32 @@ function TrainPage() {
                 setError(data.error);
             }
         } catch (err) {
-
             console.error(err);
             setError("Errore di connessione al server... è acceso?");
-
         } finally {
             setLoading(false);
         }
     }
 
     return (
-        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-            <h2>Addestra un nuovo Modello</h2>
-            <p>Incolla un testo oppure carica un .txt per creare l'engramma di Markov.</p>
+        <div className="page">
+            <div className="page-header">
+                <h1>Addestra Modello</h1>
+                <p className="page-subtitle">Incolla un testo o carica un file .txt per generare l'engramma.</p>
+            </div>
 
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+            <form onSubmit={handleSubmit} className="train-form">
+                <div className="form-group">
                     <label>Nome del modello *</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="form-group">
                     <label>Descrizione</label>
-                    <input
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
+                    <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="form-group">
                     <label>Ordine (1 o 2)</label>
                     <select value={order} onChange={(e) => setOrder(Number(e.target.value))}>
                         <option value={1}>1 - Testi più casuali</option>
@@ -96,40 +86,34 @@ function TrainPage() {
                     </select>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="form-group">
                     <label>Testo sorgente *</label>
-                    <input
-                        type="file"
-                        accept=".txt"
-                        onChange={handleFileUpload}
-                        style={{ marginBottom: "0.5rem" }}
-                    />
-                    <textarea
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        rows={10}
-                        required
-                    />
-                    <small>{text.split(/\s+/).filter(Boolean).length} parole contate</small>
+                    <div className="file-upload">
+                        <input type="file" accept=".txt" onChange={handleFileUpload} />
+                    </div>
+                    <textarea value={text} onChange={(e) => setText(e.target.value)} rows={10} required />
+                    <span className="char-count">
+                        {text.split(/\s+/).filter(Boolean).length} parole contate
+                    </span>
                 </div>
 
-                <button type="submit" disabled={loading} style={{ padding: "0.5rem", marginTop: "1rem" }}>
-                    {loading ? "Addestramento in corso..." : "Addestra Modello"}
+                <button type="submit" disabled={loading} className="btn btn-primary">
+                    {loading ? "Addestramento in corso..." : "Avvia Addestramento"}
                 </button>
             </form>
 
             {error && (
-                <div style={{ color: "red", marginTop: "1rem" }}>
+                <div className="message message-error">
                     <strong>Errore:</strong> {error}
                 </div>
             )}
 
             {result && (
-                <div style={{ color: "green", marginTop: "1rem", border: "1px solid green", padding: "1rem" }}>
+                <div className="message message-success">
                     <h3>Modello salvato!</h3>
                     <p>ID: {result._id}</p>
                     <p>Stati creati: {result.states}</p>
-                    <p>
+                    <p className="message-hint">
                         Vai alla <Link to="/dashboard">Dashboard</Link> per generare il testo.
                     </p>
                 </div>

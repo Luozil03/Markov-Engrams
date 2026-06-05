@@ -1,1 +1,146 @@
-body { margin: 0; font-family: sans-serif; }
+:root {
+    /* tema stile NVIDIA */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-card: #111111;
+    --bg-input: #1a1a1a;
+    
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    
+    --accent: #76b900; /* verde classico NVIDIA */
+    --accent-hover: #8ced02;
+    --accent-light: rgba(118, 185, 0, 0.15);
+    
+    --danger: #ef4444;
+    --success: #10b981;
+    --border: #262626;
+    --border-hover: #404040;
+    
+    --radius: 8px;
+    --radius-sm: 4px;
+}
+
+/* reset base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--accent-hover); }
+
+/* layout base */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    width: 100%;
+}
+
+.page-header { margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+.page-header h1 { font-size: 2.2rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.page-subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-brand { font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+.navbar-links { display: flex; gap: 0.5rem; }
+.navbar-link { 
+    padding: 0.5rem 1rem; 
+    border-radius: var(--radius-sm); 
+    color: var(--text-secondary); 
+    font-weight: 500;
+    transition: all 0.2s;
+}
+.navbar-link:hover { color: var(--text-primary); background-color: var(--bg-input); }
+.navbar-link.active { color: var(--accent); }
+
+
+/* form e inputs */
+.train-form { display: flex; flex-direction: column; gap: 1.5rem; max-width: 600px; }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.form-group label { font-weight: 500; font-size: 0.9rem; color: var(--text-secondary); }
+
+input, select, textarea {
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: "Inter", sans-serif;
+    transition: all 0.2s;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); background-color: var(--bg-card); }
+textarea { resize: vertical; font-family: "JetBrains Mono", monospace; font-size: 0.9rem; }
+
+/* bottoni stile tech */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: "Inter", sans-serif;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background-color: var(--accent); color: #000; }
+.btn-primary:hover:not(:disabled) { background-color: var(--accent-hover); box-shadow: 0 0 10px var(--accent-light); }
+.btn-secondary { background-color: transparent; color: var(--text-primary); border-color: var(--border); }
+.btn-secondary:hover:not(:disabled) { border-color: var(--text-secondary); background-color: var(--bg-input); }
+
+/* dashboard cards */
+.models-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+.model-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s;
+}
+.model-card:hover { border-color: var(--border-hover); }
+.model-card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.model-card-header h3 { font-size: 1.2rem; font-weight: 600; }
+.model-card-stats { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+/* testo generato console */
+.generated-text {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent);
+}
+

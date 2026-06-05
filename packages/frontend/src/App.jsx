@@ -10,7 +10,7 @@ function App() {
             <div className="app-layout">
                 <Navbar />
 
-                <main style={{ padding: "2rem" }}>
+                <main className="main-content">
                     <Routes>
                         <Route path="/" element={<TrainPage />} />
                         <Route path="/dashboard" element={<DashboardPage />} />
