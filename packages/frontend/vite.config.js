@@ -5,6 +5,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
+
+    // Per mitigare crash causato da limite di file watchers in Linux
+    watch: {
+      ignored: ["**/node_modules/**"],
+    },
+
     // Proxy per smistare le richieste ai microservizi ed evitare problemi di CORS in dev
     proxy: {
       "/api/train": {
