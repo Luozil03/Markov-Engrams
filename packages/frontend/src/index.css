@@ -1,5 +1,5 @@
 :root {
-    /* tema stile NVIDIA */
+    /* tema scuro (ispirato a NVIDIA) */
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
     --bg-card: #111111;
@@ -9,7 +9,7 @@
     --text-secondary: #9ca3af;
     --text-muted: #6b7280;
     
-    --accent: #76b900; /* verde classico NVIDIA */
+    --accent: #76b900;
     --accent-hover: #8ced02;
     --accent-light: rgba(118, 185, 0, 0.15);
     
@@ -21,6 +21,7 @@
     --radius: 8px;
     --radius-sm: 4px;
 }
+
 
 /* reset base */
 * {
@@ -40,13 +41,13 @@ body {
 a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
 a:hover { color: var(--accent-hover); }
 
-/* layout base */
+
+/* layout */
 .app-layout {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
-
 
 .main-content {
     max-width: 1000px;
@@ -59,6 +60,7 @@ a:hover { color: var(--accent-hover); }
 .page-header h1 { font-size: 2.2rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
 .page-subtitle { color: var(--text-secondary); font-size: 1.1rem; }
 
+/* navbar */
 .navbar {
     display: flex;
     align-items: center;
@@ -79,10 +81,10 @@ a:hover { color: var(--accent-hover); }
     color: var(--text-secondary); 
     font-weight: 500;
     transition: all 0.2s;
+
 }
 .navbar-link:hover { color: var(--text-primary); background-color: var(--bg-input); }
 .navbar-link.active { color: var(--accent); }
-
 
 /* form e inputs */
 .train-form { display: flex; flex-direction: column; gap: 1.5rem; max-width: 600px; }
@@ -101,7 +103,47 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); background-color: var(--bg-card); }
 textarea { resize: vertical; font-family: "JetBrains Mono", monospace; font-size: 0.9rem; }
 
-/* bottoni stile tech */
+/* fix per input file e slider (toglie i bottoni base del browser) */
+input[type="file"] {
+    padding: 0.5rem;
+    color: var(--text-secondary);
+}
+
+input[type="file"]::file-selector-button {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--bg-card);
+    border-color: var(--accent);
+    color: var(--accent); 
+}
+
+input[type="range"] {
+    /* cambia l'azzurro in verde */
+    accent-color: var(--accent); 
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="range"]:focus {
+    background-color: transparent;
+    outline: none;
+}
+
+/* bottoni */
 .btn {
     padding: 0.75rem 1.5rem;
     border: 1px solid transparent;
@@ -117,7 +159,7 @@ textarea { resize: vertical; font-family: "JetBrains Mono", monospace; font-size
 .btn-secondary { background-color: transparent; color: var(--text-primary); border-color: var(--border); }
 .btn-secondary:hover:not(:disabled) { border-color: var(--text-secondary); background-color: var(--bg-input); }
 
-/* dashboard cards */
+/* dashboard */
 .models-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
 .model-card {
     background-color: var(--bg-card);
@@ -134,7 +176,7 @@ textarea { resize: vertical; font-family: "JetBrains Mono", monospace; font-size
 .model-card-header h3 { font-size: 1.2rem; font-weight: 600; }
 .model-card-stats { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; }
 
-/* testo generato console */
+/* output generato */
 .generated-text {
     margin-top: 1rem;
     padding: 1rem;
@@ -143,4 +185,3 @@ textarea { resize: vertical; font-family: "JetBrains Mono", monospace; font-size
     border-radius: var(--radius-sm);
     border-left: 3px solid var(--accent);
 }
-
