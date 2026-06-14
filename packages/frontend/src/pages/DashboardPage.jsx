@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getModels, deleteModel, generateText, updateModel } from "../api.js";
 
 function DashboardPage() {
+
     const [models, setModels] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -40,6 +41,7 @@ function DashboardPage() {
                 modelId, length: genLength, seed: genSeed || undefined, temperature: genTemp,
             });
             if (data.success) {
+                // Aggiorno solo il testo del modello che ha appena generato
                 setGeneratedTexts(prev => ({ ...prev, [modelId]: data.text }));
             } else {
                 setError(data.error);
@@ -52,6 +54,7 @@ function DashboardPage() {
     }
 
     async function handleDelete(modelId, modelName) {
+        // TODO: window.confirm è un po' grezzo, in futuro fare un modal custom in React
         const confirmed = window.confirm(`Sicuro di voler eliminare "${modelName}"?`);
         if (!confirmed) return;
         try {
@@ -71,7 +74,7 @@ function DashboardPage() {
         try {
             await navigator.clipboard.writeText(text);
             setCopied(modelId);
-            setTimeout(() => setCopied(null), 2000);
+            setTimeout(() => setCopied(null), 2000); // feedback visivo per 2 secondi
         } catch (err) { setError("Errore negli appunti."); }
     }
 
@@ -148,21 +151,24 @@ function DashboardPage() {
                             <span>Data: {formatDate(model.createdAt)}</span>
                         </div>
 
-                        <div className="model-card-actions" style={{ marginTop: "auto", paddingTop: "1rem" }}>
-                            <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => handleGenerate(model._id)} disabled={generatingId === model._id}>
+                        <div className="model-card-actions">
+                            <button className="btn btn-primary" onClick={() => handleGenerate(model._id)} disabled={generatingId === model._id}>
                                 {generatingId === model._id ? "Generazione..." : "Genera Testo"}
                             </button>
-                            {editingId === model._id ? (
-                                <>
-                                    <button className="btn btn-secondary" onClick={() => handleSaveEdit(model._id)}>Salva</button>
-                                    <button className="btn btn-secondary" onClick={handleCancelEdit}>X</button>
-                                </>
-                            ) : (
-                                <>
-                                    <button className="btn btn-secondary" onClick={() => handleEdit(model)}>Modifica</button>
-                                    <button className="btn btn-danger" onClick={() => handleDelete(model._id, model.name)}>Elimina</button>
-                                </>
-                            )}
+                            
+                            <div className="model-card-actions-row">
+                                {editingId === model._id ? (
+                                    <>
+                                        <button className="btn btn-secondary" onClick={() => handleSaveEdit(model._id)}>Salva</button>
+                                        <button className="btn btn-secondary" onClick={handleCancelEdit}>Annulla</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button className="btn btn-secondary" onClick={() => handleEdit(model)}>Modifica</button>
+                                        <button className="btn btn-danger" onClick={() => handleDelete(model._id, model.name)}>Elimina</button>
+                                    </>
+                                )}
+                            </div>
                         </div>
 
                         {generatedTexts[model._id] && (

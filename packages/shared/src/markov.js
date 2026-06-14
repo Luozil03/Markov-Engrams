@@ -93,13 +93,16 @@ export function generateText(matrix, length = 50, seed, temperature = 1.0) {
   const words = currState.split(" ");
 
   // Random Walk
-  for (let i = 0; i < length - words.length; i++) {
+  while (words.length < length) {
     const transitions = matrix.get(currState);
 
-    // Se becco uno stato senza uscite (es. fine del testo originale), mi fermo
     if (!transitions || transitions.size === 0) {
-      // console.log("Stato assorbente raggiunto, interrompo la generazione.");
-      break;
+      // riparto da uno stato casuale
+      currState = states[Math.floor(Math.random() * states.length)];
+      const newTokens = currState.split(" ");
+      words.push("—"); // separatore visivo
+      words.push(...newTokens);
+      continue;
     }
 
     const nextWord = weightedRandomPick(transitions, temperature);
