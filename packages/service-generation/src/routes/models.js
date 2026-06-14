@@ -3,10 +3,10 @@ import { MarkovModel } from "@mvgc/shared";
 
 const router = Router();
 
-// Recupera la lista di tutti i modelli salvati
+// Recupera lista di tutti i modelli salvati
 router.get("/models", async (req, res, next) => {
   try {
-    // Escludo transitionMatrix perché pesa troppo e per la lista non serve
+    // tolgo la matrice sennò ci mette una vita a caricare
     const models = await MarkovModel.find()
       .select("-transitionMatrix")
       .sort({ createdAt: -1 })
@@ -39,7 +39,7 @@ router.get("/models/:id", async (req, res, next) => {
   }
 });
 
-// Aggiorna parzialmente un modello (solo nome o descrizione)
+// Aggiorna nome o descrizione modello
 router.patch("/models/:id", async (req, res, next) => {
   try {
     const { name, description } = req.body;
@@ -73,7 +73,7 @@ router.patch("/models/:id", async (req, res, next) => {
   }
 });
 
-// Elimina un modello
+// Elimina modello
 router.delete("/models/:id", async (req, res, next) => {
   try {
     const model = await MarkovModel.findByIdAndDelete(req.params.id);

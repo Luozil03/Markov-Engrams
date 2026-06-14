@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
+    // TODO: forse la navbar mobile è un po' stretta, sistemare i margini se avanza tempo
     return (
         <nav className="navbar">
             <div className="navbar-brand">

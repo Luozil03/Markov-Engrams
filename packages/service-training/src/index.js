@@ -11,12 +11,12 @@ const MONGO_URI =
 const app = express();
 
 app.use(cors());
-// Limite a 5MB per permettere l'upload di saggi o testi lunghi senza far crashare Express
+// aumento limite json altrimenti esplode coi testi lunghi
 app.use(express.json({ limit: "5mb" }));
 
 app.use("/api", trainRouter);
 
-// Endpoint di health check (utile per verificare se il container Docker è vivo)
+// healthcheck
 app.get("/health", (req, res) => {
   res.json({ status: "ok", service: "training" });
 });

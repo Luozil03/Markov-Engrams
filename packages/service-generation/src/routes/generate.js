@@ -28,6 +28,7 @@ router.post("/generate", async (req, res, next) => {
 
     // generateText() lavora con le Map, quindi deserializzo il JSON salvato su Mongo
     const matrix = deserializeMatrix(model.transitionMatrix);
+    // console.log("Matrice caricata:", matrix); // ATTENZIONE!!! non decommentare sennò esplode il terminale per testi lunghi
 
     const generatedText = generateText(matrix, length, seed, safeTemp);
 
