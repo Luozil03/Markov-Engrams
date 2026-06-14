@@ -111,7 +111,7 @@ function TrainPage() {
                 </div>
 
                 <div className="form-group">
-                    <label>Ordine (1 o 2)</label>
+                    <label>Ordine della catena (1-3)</label>
                     <select value={order} onChange={(e) => setOrder(Number(e.target.value))}>
                         <option value={1}>1 - Testi più casuali (Bigrammi)</option>
                         <option value={2}>2 - Testi più sensati (Trigrammi)</option>
