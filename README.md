@@ -1,51 +1,86 @@
 # Markov-Engrams
 
-"Markov-Engrams" è una web-app che implementa un modello probabilistico basato
-sulle **Catene di Markov** per la generazione procedurale del testo. L'utente
-può caricare un testo sorgente (es. un saggio, una poesia o un articolo) per
-"addestrare" un modello. Il sistema analizza le frequenze e le transizioni tra
-le parole per costruire una matrice sparsa (salvata nel database). Tramite una
-dashboard, è poi possibile far generare al sistema nuovi testi pseudo-casuali
-impostando parametri come la _lunghezza_, il _seed_ di partenza e la
-_temperatura_ (per variare il livello di "creatività" e casualità).
+Markov-Engrams is a web application that uses **Markov Chains** to generate text
+procedurally. You can provide any source text (via copy-paste, a `.txt` file
+upload, or by fetching a **Wikipedia** article) to "train" a model. The app
+analyzes word frequencies and transitions to build a sparse transition matrix.
+Once trained, you can use the dashboard to generate new, pseudo-random text by
+tweaking parameters like _length_, starting _seed_, and _temperature_ (which
+controls how "creative" or random the output is).
 
-## Architettura
+## Architecture
 
-L'applicazione è strutturata secondo un'architettura a **microservizi**,
-progettata per separare logicamente i carichi di lavoro computazionali (il
-training matematico) da quelli di lettura (la generazione in tempo reale). Lo
-stack comprende:
+I decided to use a **Microservices** architecture to keep the heavy math
+(training) separate from the quick API calls (generation). The stack includes:
 
-- **Frontend (React + Vite):** Interfaccia utente a singola pagina (SPA).
-  Comunica con i microservizi tramite API RESTful (GET, POST, PATCH, DELETE).
-  Gestisce lo stato globale e il routing dinamico lato client.
-- **Backend - Training Service (Node.js/Express su porta 4001):** Microservizio
-  dedicato all'analisi computazionale intensiva. Riceve il testo sorgente,
-  esegue la tokenizzazione, calcola le probabilità della matrice di transizione
-  e serializza i dati nel DB.
-- **Backend - Generation Service (Node.js/Express su porta 4002):**
-  Microservizio dedicato alla consultazione. Recupera i modelli dal database
-  escludendo i payload troppo pesanti nelle query di lista
-  (`.select("-transitionMatrix")` per ottimizzare la banda), ed esegue
-  l'algoritmo di Random Walk ponderato per generare i nuovi testi.
-- **Database (MongoDB):** Database NoSQL orientato ai documenti. È stato scelto
-  perché le matrici di transizione di Markov (oggetti JSON profondamente
-  annidati e molto sparsi) si mappano in modo nativo ed efficiente nei documenti
-  BSON di Mongo rispetto alle tradizionali tabelle relazionali.
+- **Frontend (React + Vite):** A Single Page Application (SPA) that talks to the
+  backend via RESTful APIs and handles client-side routing.
+- **Training Service (Node.js/Express on port 4001):** This service does the
+  heavy lifting. It receives the text, tokenizes it, calculates the transition
+  probabilities, and saves the model to the DB.
+- **Generation Service (Node.js/Express on port 4002):** This service handles
+  fetching models and generating text. To save bandwidth, it excludes the heavy
+  transition matrix when just listing the saved models (using
+  `.select("-transitionMatrix")`). It runs a weighted Random Walk algorithm to
+  output the text.
+- **Database (MongoDB):** I chose MongoDB because Markov transition matrices are
+  basically large, sparse JSON objects. Storing them as BSON documents is much
+  more natural and efficient than trying to force them into relational SQL
+  tables.
 
-## Requisiti e Installazione
+## Requirements
 
-Per avviare il progetto sono necessari:
+To run the project locally, you need:
 
-- **Node.js** (e il package manager `pnpm`)
-- **Docker** (per l'istanza locale di MongoDB)
+- **Node.js** (with `pnpm`)
+- **Docker** (for the local MongoDB instance)
 
-### Avvio Rapido
+_(Side note: I originally developed this on NixOS, so I included a `flake.nix`
+if you want a reproducible devshell with Node and pnpm already set up)._
 
-Per facilitare il testing del progetto:
+### Quick Start
 
-1. Apri il terminale nella radice del progetto.
-2. Rendi eseguibili gli script:
+To get everything running without starting each service manually:
+
+1. Open a terminal in the root directory.
+2. Make the bash scripts executable (only needed the first time):
    ```bash
    chmod +x start.sh stop.sh
    ```
+3. Run the startup script (this spins up the Docker container, installs
+   dependencies, and starts the 3 Node servers in the background):
+   ```bash
+   ./start.sh
+   ```
+4. Open your browser at: http://localhost:5173
+5. To stop the Express and Vite servers, just press `CTRL+C` in the terminal.
+6. To shut down the database and remove the Docker container when you're done,
+   run:
+   ```bash
+   ./stop.sh
+   ```
+
+## Usage
+
+The UI is split into three main views:
+
+- **Train:** Where you create a new "Engram". Paste text, upload a file, or
+  search Wikipedia. Pick the chain order (1 to 3) and start training.
+- **Dashboard:** The main hub. It lists your saved models (you can edit or
+  delete them). From here, you set the generation parameters (Length, Seed,
+  Temperature) and hit "Generate Text" to see the output in the console UI.
+- **Info:** A quick recap on the math behind Markov Chains and a diagram of the
+  architecture.
+
+## Monorepo Structure
+
+The project uses `pnpm workspaces` so I could share types and logic between the
+frontend and backend without duplicating code.
+
+```text
+packages/
+ ├── shared/               # Core logic (Markov Algorithm, Mongoose Schemas, Error Handling)
+ ├── frontend/             # UI (React, Vite, CSS)
+ ├── service-training/     # API for POST /train
+ └── service-generation/   # API for models CRUD and POST /generate
+```
