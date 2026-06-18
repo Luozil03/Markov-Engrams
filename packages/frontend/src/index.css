@@ -245,3 +245,14 @@ input[type="range"]:focus {
     text-align: left;
     word-break: break-word; /* Cosi parole troppo lunghe non escono dal box */
 }
+
+.gen-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background-color: var(--bg-card); /* Sfondo scuro per isolare il blocco */
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 3rem; 
+}
