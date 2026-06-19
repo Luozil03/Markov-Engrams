@@ -28,6 +28,7 @@ function AboutPage() {
                 <ul className="about-list">
                     <li><strong>Ordine 1</strong> (Bigrammi): lo stato è composto da 1 sola parola. Genera testi molto surreali.</li>
                     <li><strong>Ordine 2</strong> (Trigrammi): lo stato è composto da 2 parole. Genera frasi sintatticamente più corrette.</li>
+                    <li><strong>Ordine 3</strong> (Quadrigrammi): lo stato è composto da 3 parole. Genera testi estremamente fedeli all'originale, quasi un copia-incolla (richiede testi sorgente enormi per avere variazioni).</li>
                 </ul>
 
                 <h3>Temperatura</h3>

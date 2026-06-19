@@ -256,3 +256,31 @@ input[type="range"]:focus {
     border-radius: var(--radius);
     margin-bottom: 3rem; 
 }
+
+.about-section {
+    margin-bottom: 4rem; /* spazio tra i macro-argomenti */
+}
+
+.about-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border); /* Righina sottile per separare */
+    padding-bottom: 0.5rem;
+}
+
+/* Sottotitoli (H3) */
+.about-section h3 {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.about-section p, 
+.about-list li {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+    color: var(--text-primary); /* bianco non grigio */
+}
