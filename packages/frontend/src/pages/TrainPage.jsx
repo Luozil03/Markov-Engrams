@@ -115,7 +115,7 @@ function TrainPage() {
                     <select value={order} onChange={(e) => setOrder(Number(e.target.value))}>
                         <option value={1}>1 - Testi più casuali (Bigrammi)</option>
                         <option value={2}>2 - Testi più sensati (Trigrammi)</option>
-                        <option value={3}>3 - Molto fedele al testo</option>
+                        <option value={3}>3 - Molto fedele al testo (Quadrigrammi)</option>
                     </select>
                 </div>
 
