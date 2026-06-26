@@ -69,8 +69,8 @@ The UI is split into three main views:
 - **Dashboard:** The main hub. It lists your saved models (you can edit or
   delete them). From here, you set the generation parameters (Length, Seed,
   Temperature) and hit "Generate Text" to see the output in the console UI.
-- **Info:** A quick recap on the math behind Markov Chains and a diagram of the
-  architecture.
+- **Info:** A quick recap on the math behind Markov Chains and an overview of
+  the system architecture.
 
 ## Monorepo Structure
 
